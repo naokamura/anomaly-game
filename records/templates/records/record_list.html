@@ -1,0 +1,158 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>異常記録一覧 - 異常観測</title>
+<link rel="stylesheet" href="{% static 'records/list.css' %}">
+<link rel="stylesheet" href="{% static 'records/style.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho&display=swap" rel="stylesheet">
+
+<style>
+/* 一覧画面専用調整 */
+.list-container {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 60px auto;
+    padding: 30px;
+    background: rgba(20,20,20,0.95);
+    border: 1px solid rgba(255,0,0,0.4);
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(255,0,0,0.2);
+}
+
+.record-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 24px;
+}
+
+.record-list li {
+    position: relative;
+    margin-bottom: 18px;
+    padding: 12px 14px;
+    border-left: 3px solid rgba(180, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.35);
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.record-list li:hover {
+    background: rgba(30,0,0,0.5);
+}
+
+.record-title {
+    font-family: 'Shippori Mincho', 'Yu Mincho', serif;
+
+    color: #ff7777;
+    font-weight: bold;
+}
+
+.record-meta {
+    font-size: 0.75rem;
+    color: #aaa;
+    margin: 6px 0;
+}
+
+.next-btn {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 0.85rem;
+    color: #ff6666;
+    text-decoration: none;
+}
+
+.next-btn:hover {
+    text-decoration: underline;
+}
+
+/* 一覧用・小さい済スタンプ */
+.stamp.small {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    font-size: 1.4rem;
+    padding: 6px 10pxpx;
+    opacity: 0.9;
+    transform: rotate(-8deg);
+    color: #ff4444;
+    border: 1px solid rgba(255,0,0,0.7);
+    text-shadow: 0 0 4px rgba(255,0,0,0.5);
+    background: rgba(0,0,0,0.5);
+    border-radius: 4px;
+
+    animation: stampGlow 2s infinite;
+}
+
+@keyframes stampGlow {
+    0%, 100% { text-shadow: 0 0 2px #ff0000; }
+    50% { text-shadow: 0 0 8px #ff6666; }
+}
+
+/* タイトル演出 */
+h1.glitch-title {
+    text-align: center;
+    color: #ff6666;
+    text-shadow: 0 0 5px #ff0000, 0 0 10px #aa0000;
+    letter-spacing: 0.1em;
+    font-family: 'Shippori Mincho', 'Yu Mincho', serif;
+}
+.subtitle {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #ccc;
+    margin-bottom: 20px;
+}
+.button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    border-radius: 6px;
+    background: linear-gradient(45deg, #550000, #aa0000);
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+}
+.button:hover {
+    background: linear-gradient(45deg, #aa0000, #ff4444);
+    box-shadow: 0 0 15px #ff0000;
+}
+</style>
+</head>
+
+<body>
+<!-- 背景演出 -->
+<div id="fog-background"></div>
+<div id="background-layer"></div>
+<div id="noise-layer"></div>
+
+<div class="list-container">
+    <h1 class="glitch-title">異常記録一覧</h1>
+    <p class="subtitle">未処理の記録が検出されています</p>
+
+    <ul class="record-list">
+        {% for record in records %}
+        <li>
+            {% if record.id in judged_ids %}
+                <div class="stamp small">済</div>
+            {% endif %}
+
+            <div class="record-title">{{ record.title }}</div>
+            <div class="record-meta">発生日時：{{ record.observed_at }}</div>
+            <a href="{% url 'records:detail' record.pk %}" class="next-btn">
+                判定する / 詳細を見る
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <p style="text-align:center; margin-top:30px;">
+        <a href="{% url 'records:start' %}" class="button">観測を最初から始める</a>
+    </p>
+</div>
+
+<!-- glitchアニメーション用JS -->
+<script src="{% static 'records/glitch.js' %}" defer></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ record.title }} - 異常観測{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'records/style.css' %}">
+<link rel="stylesheet" href="{% static 'records/detail.css' %}">
+
+<div class="record-container">
+
+    <div class="record-frame">
+        <!-- 背景霧 -->
+        <div class="record-fog"></div>
+
+        <!-- テキストやボタンは最前面 -->
+        <div class="record-content">
+
+            {% if judgement %}
+                <div class="stamp done-stamp">済</div>
+            {% endif %}
+
+            <h1 class="glitch-title">{{ record.title }}</h1>
+
+            <p class="record-meta">
+                <strong>発生日時：</strong>{{ record.observed_at }}
+            </p>
+
+            <div class="record-description">
+                {{ record.description|linebreaks }}
+            </div>
+
+            {% if record.note %}
+                <div class="note">
+                    <strong>記録員メモ：</strong><br>
+                    {{ record.note|linebreaks }}
+                </div>
+            {% endif %}
+
+            {% if form %}
+            <form method="post" class="judgement-form">
+                {% csrf_token %}
+                <div class="judgement-buttons">
+                    <button type="submit" name="judgement" value="1">問題なし</button>
+                    <button type="submit" name="judgement" value="2">軽微</button>
+                    <button type="submit" name="judgement" value="3">注意</button>
+                    <button type="submit" name="judgement" value="4">要注意</button>
+                    <button type="submit" name="judgement" value="5">重大</button>
+                </div>
+            </form>
+            {% endif %}
+
+            {% if judgement %}
+                <div class="judgement">
+                    <strong>記録員の判断：</strong><br>
+                    {{ judgement.get_judgement_display }}
+                </div>
+                {% if warning %}
+                    <p class="warning">⚠ 記録員の判断は異常レベルと大きく乖離しています。</p>
+                {% endif %}
+            {% endif %}
+
+            <p class="back-link">
+                <a href="{% url 'records:list' %}">一覧に戻る</a>
+            </p>
+
+        </div> <!-- /.record-content -->
+
+    </div> <!-- /.record-frame -->
+
+</div> <!-- /.record-container -->
+{% endblock %}

@@ -1,0 +1,66 @@
+.list-container {
+    font-family: 'Shippori Mincho','serif';
+    color: #eee;
+}
+
+.record-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 24px;
+}
+
+.record-list li {
+    position: relative;
+    margin-bottom: 18px;
+    padding: 16px 18px;
+    border-left: 3px solid rgba(180, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.35);
+}
+
+.record-meta {
+    font-size: 0.75rem;
+    color: #aaa;
+    margin: 6px 0;
+}
+
+.next-btn {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 0.85rem;
+    color: #ff6666;
+    text-decoration: none;
+}
+
+.next-btn:hover {
+    text-decoration: underline;
+}
+
+.stamp.small {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    font-size: 1rem;
+    padding: 4px 8px;
+    opacity: 0.8;
+    transform: rotate(-8deg);
+}
+.record-title {
+    font-size: 1.2rem;  /* 以前より大きめ */
+}
+
+.record-meta {
+    font-size: 0.9rem;  /* 少し大きく */
+}
+.button {
+    font-size: 1.1rem;
+    padding: 14px 28px;
+}
+h1.glitch-title {
+     /* 明朝体系に変更 */
+    font-size: 2.5rem; /* 迫力アップ */
+    text-align: center;
+    color: #ff6666;
+    text-shadow: 0 0 5px #ff0000, 0 0 10px #aa0000;
+    letter-spacing: 0.1em;
+}
+

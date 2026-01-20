@@ -1,0 +1,304 @@
+/* ===== 基本設定 ===== */
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    background-color: #050000; /* ほぼ黒、ほんのり赤 */
+    overflow: hidden;
+}
+
+.start-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Shippori Mincho', serif; /* 明朝体 */
+    color: #eee;
+    position: relative;
+    z-index: 1;
+}
+
+/* ===== スタート画面コンテナ ===== */
+.start-container {
+    max-width: 900px;
+    padding: 50px 40px;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    animation: fade-in 1.2s ease-out;
+    z-index: 10;
+}
+
+/* ===== タイトル ===== */
+.glitch-title {
+    font-size: 3em;
+    color: #ff2b2b;
+    letter-spacing: 3px;
+    text-shadow: 0 0 5px #550000, 0 0 15px #aa0000, 0 0 30px #000;
+    position: relative;
+    z-index: 10;
+    animation: title-flicker 3s infinite, bleed-shadow 6s infinite alternate;
+}
+
+.glitch-title::after {
+    content: '';
+    position: absolute;
+    left: 10%;
+    bottom: -18px;
+    width: 80%;
+    height: 14px;
+    background: linear-gradient(to bottom, rgba(255,0,0,0.65), rgba(120,0,0,0.85), transparent);
+    filter: blur(7px);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+    animation: blood-drip 9s infinite;
+}
+
+@keyframes title-flicker {
+    0%,18%,22%,25%,53%,57%,100% { opacity:1; }
+    20%,24%,55% { opacity:0.35; }
+}
+@keyframes bleed-shadow {
+    0%,60% { text-shadow:0 0 5px #550000,0 0 15px #220000; }
+    80% { text-shadow:0 6px 20px #aa0000,0 12px 35px #550000; }
+    100% { text-shadow:0 10px 30px #aa0000,0 20px 45px #220000; }
+}
+@keyframes blood-drip {
+    0%,65% { opacity:0; transform:translateY(0); }
+    80% { opacity:0.35; transform:translateY(4px); }
+    100% { opacity:0.15; transform:translateY(0); }
+}
+.glitch-title.fade-out {
+    color: #111;
+    text-shadow: none;
+    filter: blur(0.5px);
+    transition:
+        color 0.08s linear,
+        text-shadow 0.08s linear,
+        filter 0.08s linear,
+        opacity 0.08s linear;
+}
+.glitch-title-wrap {
+    display: inline-block;
+}
+.glitch-title.flip {
+    transform: scaleY(-1);
+    transition: transform 0.06s linear;
+}
+
+/* ===== サブタイトル ===== */
+.subtitle {
+    font-size: 1.2em;
+    color: #cc4444;
+    text-shadow: 0 0 15px #550000;
+    margin-bottom: 40px;
+    opacity: 0.9;
+    animation: subtitle-fade 6s infinite, subtitle-drift 18s infinite linear;
+    position: relative;
+    z-index: 5;
+}
+
+@keyframes subtitle-fade {
+    0%,82%,100% { opacity:0.9; }
+    85% { opacity:0.4; }
+    88% { opacity:1; }
+}
+@keyframes subtitle-drift {
+    0% { transform: translate(0,0); }
+    50% { transform: translate(1px,-2px); }
+    100% { transform: translate(0,0); }
+}
+
+/* ===== スタートボタン ===== */
+.start-btn-wrap { text-align:center; margin-top:20px; }
+
+.start-btn {
+    position: relative;
+    display: inline-block;
+    min-width: 240px;
+    padding: 14px 28px;
+    font-size: 1.05em;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: rgba(200,200,200,0.85);
+
+    background: linear-gradient(
+        to bottom,
+        rgba(80,0,0,0.55),
+        rgba(20,0,0,0.75)
+    );
+    border: 1px solid rgba(140,30,30,0.35);
+    border-radius: 14px;
+
+    box-shadow:
+        inset 0 0 18px rgba(120,0,0,0.35),
+        0 0 8px rgba(0,0,0,0.6);
+    
+    text-decoration: none;
+    cursor: pointer;
+    
+    z-index: 10;
+
+    transition:
+        background-color 0.35s ease,
+        box-shadow 0.35s ease,
+        transform 0.12s ease,
+        color 0.25s ease;
+}
+
+.start-btn:hover {
+    color: rgba(255,160,160,0.95);
+    background :linear-gradient(
+        to bottom,
+        rgba(120,0,0,0.65),
+        rgba(40,0,0,0.85)
+    );
+    box-shadow: 
+        inset 0 0 28px rgba(180,0,0,0.45),
+        0 0 12px rgba(120,0,0,0.4);
+    transform: translateY(-1px);
+}
+
+@keyframes glitch {
+    0%{transform:translate(0,0);}
+    20%{transform:translate(-2px,1px);}
+    40%{transform:translate(2px,-1px);}
+    60%{transform:translate(-1px,2px);}
+    80%{transform:translate(1px,-2px);}
+    100%{transform:translate(0,0);}
+}
+.start-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+        circle at 30% 30%,
+        rgba(255, 80, 80, 0.08),
+        transparent 60%
+    );
+    opacity: 0.6;
+    pointer-events: none;
+}
+.start-btn:active {
+    background: linear-gradient(
+        to bottom,
+        rgba(30, 0, 0, 0.85),
+        rgba(5, 0, 0, 0.95)
+    );
+
+    color: rgba(200, 170, 170, 0.75);
+
+    box-shadow:
+        inset 0 0 8px rgba(0, 0, 0, 0.8),
+        0 0 0 rgba(0, 0, 0, 0);
+
+    transform: translateY(1px);
+    transition: 0.08s linear;
+}
+.start-btn:active::after {
+    opacity: 1;
+}
+
+
+
+/* ===== 背景霧・静電ノイズ ===== */
+.fog {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background:
+        radial-gradient(circle at 30% 40%, rgba(255,120,120,0.03), transparent 60%),
+        radial-gradient(circle at 70% 60%, rgba(120,0,0,0.04), transparent 65%);
+    animation: fog-move 18s linear infinite;
+    pointer-events: none;
+    z-index: 0;    
+}
+
+.static {
+    position: absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+    background-image: repeating-linear-gradient(
+        0deg,
+        rgba(255,255,255,0.03),
+        rgba(255,255,255,0.03) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    animation: static-flicker 0.12s infinite;
+    pointer-events: none;
+    z-index: 1; 
+}
+
+@keyframes static-flicker {
+    0%{opacity:0.08;}
+    50%{opacity:0.18;}
+    100%{opacity:0.08;}
+}
+
+/* ===== フェードイン ===== */
+@keyframes fade-in {
+    0%{opacity:0; transform:translateY(-25px);}
+    100%{opacity:1; transform:translateY(0);}
+}
+.bg-red-fog {
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(160, 0, 0, 0.45),
+        rgba(20, 0, 0, 0.95) 60%,
+        rgba(0,0,0,1) 100%
+    );
+    overflow: hidden;
+}
+.bg-fog-red {
+    position: absolute;
+    inset: -50%;
+    background: linear-gradient(
+        120deg,
+        rgba(160, 0, 0, 0.35),
+        rgba(40, 0, 0, 0.15),
+        rgba(160, 0, 0, 0.35)
+    );
+    animation: redFogMove 22s linear infinite;
+    filter: blur(40px);
+}
+.bg-fog-dark {
+    position: absolute;
+    inset: -30%;
+    background: radial-gradient(
+        circle at 30% 70%,
+        rgba(0,0,0,0.75),
+        transparent 60%
+    );
+    animation: darkFogPulse 14s ease-in-out infinite;
+    filter: blur(35px);
+}
+
+.screen-flash {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(120, 0, 0, 0.6),
+        rgba(0, 0, 0, 0.95) 70%
+    );
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: opacity 0.12s ease;
+}
+
+.screen-flash.active {
+    opacity: 1;
+    filter: saturate(120%);
+}

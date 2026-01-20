@@ -1,0 +1,129 @@
+/* ===== record_detail専用 ===== */
+body, html {
+    margin: 0;
+    padding: 0;
+    background: #0a0a0a;
+    font-family: 'Courier New', monospace;
+    color: #eee;
+    min-height: 100vh;
+}
+
+/* ===== 背景フル画面霧 ===== */
+.record-fog {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 30% 70%, rgba(255,0,0,0.15), transparent 60%),
+        radial-gradient(circle at 70% 80%, rgba(120,0,0,0.25), transparent 65%);
+    animation: fog-drift 12s infinite alternate ease-in-out;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* 背景霧アニメ */
+@keyframes fog-drift {
+    from { transform: translateY(0) translateX(0); }
+    to   { transform: translateY(-6px) translateX(3px); }
+}
+
+/* ===== 異常記録枠 ===== */
+.record-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background: linear-gradient(135deg, #1a0000, #330000);
+    border-radius: 12px;
+    border: 2px solid rgba(255,50,50,0.7);
+    box-shadow: 0 0 20px rgba(255,0,0,0.4), 0 0 40px rgba(0,0,0,0.6);
+    position: relative;
+    overflow: hidden;
+    animation: subtle-shake 6s infinite alternate ease-in-out;
+}
+
+/* 枠の微振動アニメ */
+@keyframes subtle-shake {
+    0% { transform: translate(0,0); }
+    50% { transform: translate(1px,-1px); }
+    100% { transform: translate(0,0); }
+}
+
+/* ===== 最前面：テキストとボタン ===== */
+.record-content {
+    position: relative;
+    z-index: 5;
+    padding: 24px;
+}
+
+/* タイトル */
+.glitch-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1.9rem;
+    color: #ff4c4c;
+    text-align: center;
+    letter-spacing: 2px;
+    text-shadow: 0 0 5px #550000, 0 0 15px #aa0000, 0 0 25px #000;
+    animation: title-flicker 3s infinite, bleed-shadow 6s infinite alternate;
+    margin-bottom: 20px;
+}
+
+.glitch-title::after {
+    content: '';
+    position: absolute;
+    left: 10%;
+    bottom: -14px;
+    width: 80%;
+    height: 12px;
+    background: linear-gradient(to bottom, rgba(255,0,0,0.65), rgba(120,0,0,0.85), transparent);
+    filter: blur(7px);
+    opacity: 0;
+    pointer-events: none;
+    animation: blood-drip 9s infinite;
+}
+
+@keyframes title-flicker {0%,18%,22%,25%,53%,57%,100%{opacity:1;}20%,24%,55%{opacity:0.35;}}
+@keyframes bleed-shadow {0%,60%{text-shadow:0 0 5px #550000,0 0 15px #220000;}80%{text-shadow:0 6px 20px #aa0000,0 12px 35px #550000;}100%{text-shadow:0 10px 30px #aa0000,0 20px 45px #220000;}}
+@keyframes blood-drip {0%,65%{opacity:0; transform:translateY(0);}80%{opacity:0.35; transform:translateY(4px);}100%{opacity:0.15; transform:translateY(0);}}
+
+/* メタ情報・本文 */
+.record-meta { font: size 0.5rem; color:#ccc; margin-bottom:16px; }
+.record-no { font-size: 0.5rem; color: "bbb";}
+.record-description { font-size:1.4em; line-height:1.8; color:#eee; margin-bottom:20px; }
+.note { font-size:0.95rem; color:#ff9999; background: rgba(80,0,0,0.1); padding:12px; border-left:3px solid #ff4444; margin-top:20px; border-radius:6px; }
+
+
+/* ===== 判断ボタン ===== */
+.judgement-buttons {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 24px;
+    gap: 10px;
+}
+
+.judgement-buttons button {
+    flex: 1 1 18%;
+    background: linear-gradient(135deg, #440000, #aa0000);
+    color: #fff;
+    border: 1px solid #880000;
+    border-radius: 6px;
+    padding: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    text-shadow: 0 0 3px #550000;
+    transition: all 0.2s ease-in-out;
+}
+
+.judgement-buttons button:hover {
+    background: linear-gradient(135deg, #aa0000, #ff4444);
+    box-shadow: 0 0 15px #ff0000;
+    transform: translateY(-1px);
+}
+
+
+/* 判定結果 */
+.judgement { margin-top:30px; padding:14px; border-left:4px solid #ff4444; background: rgba(0,0,0,0.4); color:#ffbbbb; line-height:1.6; text-shadow:0 0 6px rgba(255,0,0,0.4); }
+.warning { margin-top:12px; color:#ff5555; text-shadow:0 0 6px rgba(255,0,0,0.4); font-weight:bold; }
+
+/* 戻るリンク */
+.back-link { margin-top:30px; display:block; text-align:center; }

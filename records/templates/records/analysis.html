@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body_class %}analysis-page{% endblock %}
+
+{% block title %}解析結果 - 異常観測{% endblock %}
+
+{% block content %}
+
+<!-- 背景霧（薄灰） + 静電ノイズ -->
+<div class="bg-fog-dark"></div>
+<div class="static"></div>
+
+<!-- データ属性で数値をJSに渡す -->
+<div id="stats-data"
+     data-total="{{ total|default:'0' }}"
+     data-correct="{{ correct|default:'0' }}"
+     data-one-step="{{ one_step_diff|default:'0' }}"
+     data-major="{{ major_diff|default:'0' }}"
+     data-deviation="{{ deviation_rate|default:'0' }}">
+</div>
+
+<div class="record-container">
+    <h1 id="analysis-title">解析結果</h1>
+
+    <div class="player-type">
+        あなたは <span>{{ player_type }}</span> です。<br>
+        {{ type_description }}
+    </div>
+
+    <div class="stats">
+        <p>判定総数：<span id="total">0</span></p>
+        <p>完全一致：<span id="correct">0</span></p>
+        <p>軽度のズレ：<span id="one_step_diff">0</span></p>
+        <p>大きなズレ：<span id="major_diff">0</span></p>
+        <p>乖離率：<span id="deviation_rate">0%</span></p>
+    </div>
+
+    <div class="final-message">
+        {{ final_text|linebreaksbr }}
+    </div>
+
+    <div style="text-align:center;">
+        <a href="{% url 'records:start' %}" class="back-btn">タイトルに戻る</a>
+    </div>
+</div>
+
+<!-- 解析ページ専用CSS + JS -->
+<link rel="stylesheet" href="{% static 'records/analysis.css' %}?v=6">
+<script src="{% static 'records/analysis.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,112 @@
+/* 解析ページ専用 */
+
+body.analysis-page {
+    background: transparent; /* style.css の背景を打ち消す */
+}
+
+/* コンテナ */
+.record-container {
+    max-width: 800px;
+    margin: 60px auto;
+    padding: 30px;
+    background: rgba(15,15,15,0.95);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(255,255,255,0.05);
+    color: #eee;
+    font-family: "MS Mincho", "Hiragino Mincho Pro", "Times New Roman", serif;
+    letter-spacing: 0.05em;
+}
+
+/* タイトル */
+#analysis-title {
+    font-size: 2.2rem;
+    text-align: center;
+    font-weight: bold;
+    color: #ccc;
+    margin-bottom: 20px;
+    letter-spacing: 0.08em;
+}
+
+/* プレイヤー型 */
+.player-type {
+    text-align: center;
+    font-size: 1.4rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 30px; /* 統計との間隔を広げる */
+}
+
+.player-type span {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #eee;
+}
+
+/* 統計 */
+.stats p span {
+    display: inline-block;
+    min-width: 2em;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+/* 最終メッセージ */
+.final-message {
+    margin-top: 12px;
+    color: #ccc;
+    font-weight: bold;
+    line-height: 1.4;
+    text-align: center;
+}
+
+/* ボタン */
+.back-btn {
+    display:inline-block;
+    margin-top:24px;
+    padding: 10px 20px;
+    background: #222;
+    color: #eee;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.back-btn:hover {
+    background: #444;
+}
+
+/* 背景霧・静電ノイズ */
+.bg-fog-dark {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background: radial-gradient(circle at 30% 70%, rgba(200,200,200,0.05), transparent 60%);
+    animation: darkFogPulse 30s ease-in-out infinite;
+}
+
+.static {
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background-image: repeating-linear-gradient(
+        45deg,
+        rgba(255,255,255,0.1),
+        rgba(255,255,255,0.1) 1px,
+        transparent 1px,
+        transparent 3px
+    );
+    animation: static-flicker 0.15s infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+/* アニメーション */
+@keyframes darkFogPulse {
+    0%,100% { opacity:0.4; }
+    50% { opacity:0.6; }
+}
+
+@keyframes static-flicker {
+    0% { opacity: 0.05; }
+    25% { opacity: 0.2; }
+    50% { opacity: 0.1; }
+    75% { opacity: 0.25; }
+    100% { opacity: 0.05; }
+}

@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>異常観測</title>
+    <link rel="stylesheet" href="{% static 'records/start.css' %}">
+</head>
+<body>
+
+<!-- 赤黒霧 背景 -->
+<div class="bg-red-fog">
+    <div class="start-page">
+
+        <!-- 背景霧・静電ノイズ -->
+        <div class="fog"></div>
+        <div class="static"></div>
+
+        <!-- スタート画面 -->
+        <div class="start-container">
+            <h1 class="glitch-title" id="title">異常観測</h1>
+
+            <p class="subtitle">あなたは記録員。記録を読み、判断せよ…</p>
+
+            <div class="start-btn-wrap">
+                <a href="{% url 'records:start_game' %}"
+                   class="start-btn"
+                   id="startBtn">
+                    観測を開始
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- 画面暗転 -->
+<div class="screen-flash"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.querySelector(".start-btn");
+    const flash = document.querySelector(".screen-flash");
+    const title = document.querySelector(".glitch-title");
+
+    if (!btn || !flash || !title) return;
+
+
+    btn.addEventListener("click", (e) =>{
+        e.preventDefault();
+
+    // 一瞬上下反転
+        title.classList.add("flip");
+
+    // ★ 強制再描画（これが超重要）
+        title.offsetHeight;    
+    
+    // タイトル一瞬消失
+        title.classList.add("fade-out");
+
+    // 画面暗転
+        setTimeout(() => {
+            flash.classList.add("active");
+        }, 60);
+
+    // 遷移
+    setTimeout(() => {
+        window.location.href = btn.href;
+    }, 350);
+    });
+});
+</script>
+
+</body>
+</html>
